@@ -2,6 +2,7 @@
 #ifndef __SIGNALCALANDGEN_H
 #define __SIGNALCALANDGEN_H
 
+#include "main.h"
 #include <stdbool.h>
 #include <math.h>
 
