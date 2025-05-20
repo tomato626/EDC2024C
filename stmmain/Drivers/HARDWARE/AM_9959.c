@@ -37,7 +37,7 @@ uint8_t AM_Init(void)
 hmax: AM_Instance指针数组
 cnt:   数组长度
 */
-uint8_t AM_ApplyChanges(AM_Instance* hmax[], uint16_t cnt)
+uint8_t AM_ApplyChanges(AM_Instance* hamx[], uint16_t cnt)
 {
 	uint16_t data16;
 	uint32_t data32;
@@ -46,27 +46,27 @@ uint8_t AM_ApplyChanges(AM_Instance* hmax[], uint16_t cnt)
 	for(uint16_t i=0;i<cnt;i++)
 	{
 		
-		datafloat=((double)(hmax[i]->had9959->freq[hmax[i]->CH_MW])*360*(hmax[i]->TDelay)/1000000000);
-		AD9959_Set_Phase(hmax[i]->had9959,hmax[i]->CH_MW,&datafloat);
+		datafloat=((double)(hamx[i]->had9959->freq[hamx[i]->CH_MW])*360*(hamx[i]->TDelay)/1000000000);
+		AD9959_Set_Phase(hamx[i]->had9959,hamx[i]->CH_MW,&datafloat);
 
-		datafloat=((double)(hmax[i]->had9959->freq[hmax[i]->CH_CW])*360*(hmax[i]->TDelay)/1000000000);
-		AD9959_Set_Phase(hmax[i]->had9959,hmax[i]->CH_CW,&datafloat);
+		datafloat=((double)(hamx[i]->had9959->freq[hamx[i]->CH_CW])*360*(hamx[i]->TDelay)/1000000000);
+		AD9959_Set_Phase(hamx[i]->had9959,hamx[i]->CH_CW,&datafloat);
 		
 		data16=1023;
-		AD9959_Set_Amp(hmax[i]->had9959, hmax[i]->CH_CW, &data16);
-		data16=data16*(hmax[i]->MDepth);
-		AD9959_Set_Amp(hmax[i]->had9959, hmax[i]->CH_MW, &data16);
+		AD9959_Set_Amp(hamx[i]->had9959, hamx[i]->CH_CW, &data16);
+		data16=data16*(hamx[i]->MDepth);
+		AD9959_Set_Amp(hamx[i]->had9959, hamx[i]->CH_MW, &data16);
 		
 		data32=2000000;
-		AD9959_Set_Freq(hmax[i]->had9959, hmax[i]->CH_MW, &data32);
+		AD9959_Set_Freq(hamx[i]->had9959, hamx[i]->CH_MW, &data32);
 	}
 
 	for(uint16_t i=0;i<cnt;i++)
 	{
-		if(hmax[i]->changeflag==1)
+		if(hamx[i]->changeflag==1)
 		{
-			AD9959_Apply_Change(hmax[i]->had9959);
-			hmax[i]->changeflag=0;
+			AD9959_Apply_Change(hamx[i]->had9959);
+			hamx[i]->changeflag=0;
 		}
 		
 	}
@@ -80,47 +80,47 @@ uint8_t AM_ApplyChanges(AM_Instance* hmax[], uint16_t cnt)
 
 
 /*
-设置hmax指向的AM实例的载波频率
+设置hamx指向的AM实例的载波频率
 */
-uint8_t AM_SetCarrierFreq(AM_Instance* hmax, uint32_t Cfreq)
+uint8_t AM_SetCarrierFreq(AM_Instance* hamx, uint32_t Cfreq)
 {
-	AD9959_Set_Freq(hmax->had9959,hmax->CH_CW,&Cfreq);
-	hmax->changeflag=1;
+	AD9959_Set_Freq(hamx->had9959,hamx->CH_CW,&Cfreq);
+	hamx->changeflag=1;
 	return HAL_OK;
 }
 
 
 /*
-设置hmax指向的AM实例的基波频率
+设置hamx指向的AM实例的基波频率
 */
-uint8_t AM_SetModulationFreq(AM_Instance* hmax, uint32_t Mfreq)
+uint8_t AM_SetModulationFreq(AM_Instance* hamx, uint32_t Mfreq)
 {
-	AD9959_Set_Freq(hmax->had9959,hmax->CH_MW,&Mfreq);
-	hmax->changeflag=1;
+	AD9959_Set_Freq(hamx->had9959,hamx->CH_MW,&Mfreq);
+	hamx->changeflag=1;
 	return HAL_OK;
 }
 
 /*
-设置hmax指向的AM实例的调制度
+设置hamx指向的AM实例的调制度
 */
-uint8_t AM_SetMDepth(AM_Instance* hmax, float MD)
+uint8_t AM_SetMDepth(AM_Instance* hamx, float MD)
 {
-	hmax->MDepth=MD;
-	hmax->changeflag=1;
+	hamx->MDepth=MD;
+	hamx->changeflag=1;
 	return HAL_OK;
 }
 
 /*
-设置hmax1, hmax2指向的AM实例的载波时间差
-hmax1的时间偏移被设置为0，hmax2的时间偏移被设置为TD
+设置hamx1, hamx2指向的AM实例的载波时间差
+hamxx1的时间偏移被设置为0，hamx2的时间偏移被设置为TD
 TD:  延时，单位ns
 */
-uint8_t AM_SetTDelay(AM_Instance* hmax1, AM_Instance* hmax2, float TD)
+uint8_t AM_SetTDelay(AM_Instance* hamx1, AM_Instance* hamx2, float TD)
 {
-	hmax1->TDelay=0;
-	hmax2->TDelay=TD;
-	hmax1->changeflag=1;
-	hmax2->changeflag=1;
+	hamx1->TDelay=0;
+	hamx2->TDelay=TD;
+	hamx1->changeflag=1;
+	hamx2->changeflag=1;
 	return HAL_OK;
 }
 

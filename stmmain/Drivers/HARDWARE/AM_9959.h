@@ -40,13 +40,13 @@ extern AM_Instance AM1,AM2;
 void AM_Instance_Init(AM_Instance* ham, AD9959_HandleTypeDef* had9959, uint16_t chcw, uint16_t chmw, DAC_HandleTypeDef* hdacx, uint32_t dac_channel);
 uint8_t AM_Init(void);
 uint8_t SetDAC(AM_Instance* hamx, uint16_t val);
-uint8_t AM_ApplyChanges(AM_Instance* hmax[], uint16_t cnt);
-uint8_t AM_SetCarrierFreq(AM_Instance* hmax, uint32_t Cfreq);
-uint8_t AM_SetModulationFreq(AM_Instance* hmax, uint32_t Mfreq);
-uint8_t AM_SetCarrierFreq(AM_Instance* hmax, uint32_t Cfreq);
-uint8_t AM_SetModulationFreq(AM_Instance* hmax, uint32_t Mfreq);
-uint8_t AM_SetMDepth(AM_Instance* hmax, float MD);
-uint8_t AM_SetTDelay(AM_Instance* hmax1, AM_Instance* hmax2, float TD);
+uint8_t AM_ApplyChanges(AM_Instance* hamx[], uint16_t cnt);
+uint8_t AM_SetCarrierFreq(AM_Instance* hamx, uint32_t Cfreq);
+uint8_t AM_SetModulationFreq(AM_Instance* hamx, uint32_t Mfreq);
+uint8_t AM_SetCarrierFreq(AM_Instance* hamx, uint32_t Cfreq);
+uint8_t AM_SetModulationFreq(AM_Instance* hamx, uint32_t Mfreq);
+uint8_t AM_SetMDepth(AM_Instance* hamx, float MD);
+uint8_t AM_SetTDelay(AM_Instance* hamx1, AM_Instance* hamx2, float TD);
 	
 
 
