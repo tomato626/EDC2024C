@@ -34,7 +34,7 @@ typedef struct{
 	uint32_t freq[4];
 	uint16_t phase[4];
 	uint16_t amp[4];
-	
+	uint8_t changeFlag;
 	
 }AD9959_HandleTypeDef;
 
@@ -52,6 +52,15 @@ void Init_AD9959(void);
 void Write_frequence(uint8_t Channel,uint32_t Freq);
 void Write_Amplitude(uint8_t Channel, uint16_t Ampli);
 void Write_Phase(uint8_t Channel,uint16_t Phase);
+
+uint8_t AD9959_Set_Phase(AD9959_HandleTypeDef* had9959, uint16_t channel, float* data);
+
+uint8_t AD9959_Set_Freq(AD9959_HandleTypeDef* had9959, uint16_t channel, uint32_t* data);
+
+uint8_t AD9959_Set_Amp(AD9959_HandleTypeDef* had9959, uint16_t channel, uint16_t* data);
+
+uint8_t AD9959_Apply_Change(AD9959_HandleTypeDef* had9959);
+
 
 #endif
 
