@@ -33,7 +33,7 @@ uint8_t AM_Init(void)
 
 
 /*
-同步并应用由AM_SetXXX产生的更改。
+同步并应用由AM_SetXXX产生的更改。使用同一个AD9959实例的AM示例将会在同步被设置。
 hmax: AM_Instance指针数组
 cnt:   数组长度
 */

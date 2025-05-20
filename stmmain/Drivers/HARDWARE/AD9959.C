@@ -165,7 +165,7 @@ void Write_frequence(uint8_t Channel, uint32_t Freq)
 {	 
   uint8_t CFTW0_DATA[4] = {0x00,0x00,0x00,0x00};
   uint32_t Temp;            
-  Temp = (uint32_t)Freq * 8.589934592;  // Convert frequency to 32-bit tuning word
+  Temp = (((double)((uint64_t)Freq<<32))/(uint64_t)(500000000));  // Convert frequency to 32-bit tuning word
   
   CFTW0_DATA[3] = (uint8_t)Temp;
   CFTW0_DATA[2] = (uint8_t)(Temp>>8);

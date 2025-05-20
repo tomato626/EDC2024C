@@ -173,7 +173,7 @@ int main(void)
 					tdelay=read1ByteFromRingBuffer(2);
 					sprintf(str,"Bsig delay changed to %d0ns",tdelay);syslog(str);
 					
-					uint16_t TD=tdelay;
+					uint16_t TD=tdelay*10;
 					AM_SetTDelay(&AM1,&AM2,TD);
 				} 
 				else if (operation_flag == 0x04)

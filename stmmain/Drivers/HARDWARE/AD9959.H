@@ -14,6 +14,8 @@
 #define RDW_ADD   0x08   //RDW 通道线性向上扫描寄存器
 #define FDW_ADD   0x09   //FDW 通道线性向下扫描寄存器
 
+#define AD9959_FREQ ((uint64_t)500000000)
+
 /* AD9959 Control Pin Macros */
 #define CS(a)          HAL_GPIO_WritePin(AD9959_CS_GPIO_Port, AD9959_CS_Pin, (a))  // Chip Select (active low, default HIGH)
 #define SCLK(a)        HAL_GPIO_WritePin(GPIOB, AD9959_SCK_Pin, (a))               // Serial Clock (SCK)

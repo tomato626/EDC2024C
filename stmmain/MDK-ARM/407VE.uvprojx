@@ -774,11 +774,6 @@
               <FilePath>..\Drivers\HARDWARE\delay.c</FilePath>
             </File>
             <File>
-              <FileName>delay.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Drivers\HARDWARE\delay.h</FilePath>
-            </File>
-            <File>
               <FileName>lcd_fonts.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Drivers\HARDWARE\lcd_fonts.c</FilePath>
@@ -812,11 +807,6 @@
               <FileName>AM_9959.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Drivers\HARDWARE\AM_9959.c</FilePath>
-            </File>
-            <File>
-              <FileName>AM_9959.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Drivers\HARDWARE\AM_9959.h</FilePath>
             </File>
           </Files>
         </Group>
