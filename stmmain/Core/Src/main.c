@@ -108,8 +108,6 @@ int main(void)
   /* USER CODE BEGIN 2 */
   AM_Init();
   delay_init();
-  HAL_DAC_Start(&hdac,DAC_CHANNEL_1);
-
   
   
   

@@ -28,7 +28,7 @@ AD9959_HandleTypeDef hAD9959;
 void Init_AD9959(void)  
 { 
 	uint32_t SinFre[4]={1000000,1000000,1000000,1000000};
-	uint16_t SinPhr[4]={0,4096-1,4096*2-1,4096*3-1};
+	float SinPhr[4]={0,0,0,0};
 	uint16_t SinAmp[4]={1023,1023,1023,1023};
 	for(uint16_t i=0;i<4;i++)
 	{
@@ -279,6 +279,7 @@ uint8_t AD9959_Set_Phase(AD9959_HandleTypeDef* had9959, uint16_t channel, float*
 		{
 			buf+=360.0;
 		}
+		buf/=360.0;
 		had9959->phase[channel]=((uint16_t)(buf*16383))%16383;
 	}
 	else
@@ -291,6 +292,7 @@ uint8_t AD9959_Set_Phase(AD9959_HandleTypeDef* had9959, uint16_t channel, float*
 			{
 				buf+=360.0;
 			}
+			buf/=360.0;
 			had9959->phase[i]=(uint16_t)(buf*16383);
 		}
 	}
