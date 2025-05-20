@@ -20,6 +20,7 @@
 #include "main.h"
 #include "rtc.h"
 #include "spi.h"
+#include "tim.h"
 #include "usart.h"
 #include "gpio.h"
 
@@ -97,6 +98,7 @@ int main(void)
   MX_RTC_Init();
   MX_SPI3_Init();
   MX_USART1_UART_Init();
+  MX_TIM6_Init();
   /* USER CODE BEGIN 2 */
 	SPI_LCD_Init();
 	syslog("LCD Init Success");
