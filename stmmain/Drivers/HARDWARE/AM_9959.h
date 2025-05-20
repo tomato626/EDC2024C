@@ -46,7 +46,7 @@ uint8_t AM_SetModulationFreq(AM_Instance* hamx, uint32_t Mfreq);
 uint8_t AM_SetCarrierFreq(AM_Instance* hamx, uint32_t Cfreq);
 uint8_t AM_SetModulationFreq(AM_Instance* hamx, uint32_t Mfreq);
 uint8_t AM_SetMDepth(AM_Instance* hamx, float MD);
-uint8_t AM_SetTDelay(AM_Instance* hamx1, AM_Instance* hamx2, float TD);
+uint8_t AM_SetTDelay(AM_Instance* hamx1, AM_Instance* hamx2, uint16_t TD);
 	
 
 

@@ -115,7 +115,7 @@ uint8_t AM_SetMDepth(AM_Instance* hamx, float MD)
 hamxx1的时间偏移被设置为0，hamx2的时间偏移被设置为TD
 TD:  延时，单位ns
 */
-uint8_t AM_SetTDelay(AM_Instance* hamx1, AM_Instance* hamx2, float TD)
+uint8_t AM_SetTDelay(AM_Instance* hamx1, AM_Instance* hamx2, uint16_t TD)
 {
 	hamx1->TDelay=0;
 	hamx2->TDelay=TD;

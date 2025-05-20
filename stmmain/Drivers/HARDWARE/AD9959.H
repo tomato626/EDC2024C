@@ -2,6 +2,7 @@
 #define _AD9959_H_
 #include "main.h"
 #include "stdint.h"
+#include "AD9959_compens.H"
 //AD9959寄存器地址定义
 #define CSR_ADD   0x00   //CSR 通道选择寄存器
 #define FR1_ADD   0x01   //FR1 功能寄存器1

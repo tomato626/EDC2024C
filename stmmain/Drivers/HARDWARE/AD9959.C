@@ -319,7 +319,7 @@ uint8_t AD9959_Set_Freq(AD9959_HandleTypeDef* had9959, uint16_t channel, uint32_
 
 uint8_t AD9959_Set_Amp(AD9959_HandleTypeDef* had9959, uint16_t channel, uint16_t* data)
 {
-	uint16_t maxAmp=1024;
+	uint16_t maxAmp=1023;
 	if(channel<4)
 	{
 		had9959->amp[channel]=data[0]<=maxAmp? data[0]: maxAmp;
