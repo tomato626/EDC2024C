@@ -2,9 +2,12 @@
 #define _AD9959_COMPENS_H_
 
 #include "main.h"
+#include "math.h"
 
+#define AD9959_COMP_MAX_F  2
+#define AD9959_COMP_MAP_SIZE 100
 
-#define AD9959_COMP_Q2F(q) ((((float)(q))/INT16_MAX)/2)
+#define AD9959_COMP_Q2F(q) ((((float)(q))/INT16_MAX)/AD9959_COMP_MAX_F)
 
 
 /*
@@ -15,7 +18,8 @@ ampF在0-2之间
 */
 extern const uint16_t AD9959_AMP_MAP[100];
 
-
+float AD9959_GetMinAmp(uint16_t rng1, uint16_t rng2);
+float AD9959_AmpComps(float freq);
 
 
 #endif

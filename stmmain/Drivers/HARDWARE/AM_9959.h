@@ -3,6 +3,7 @@
 #include "main.h"
 #include "dac.h"
 #include "AD9959.H"
+#include "AD9959_compens.H"
 
 #ifdef ARM_MATH_CM4
 #include "arm_math.h"
@@ -27,6 +28,8 @@ typedef struct{
 	float MDepth;//调制度
 	float TDelay;//延时
 	float amp;//幅度
+	
+	float min_amp;//9959最小幅度比例
 	
 	uint8_t changeflag;
 	

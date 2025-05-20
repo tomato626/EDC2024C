@@ -14,6 +14,7 @@ void AM_Instance_Init(AM_Instance* ham, AD9959_HandleTypeDef* had9959, uint16_t 
 	ham->hdac=hdacx;
 	ham->CH_ADC=dac_channel;
 	ham->changeflag=0;
+	ham->min_amp=AD9959_GetMinAmp(0,40);
 }
 
 /*
@@ -26,6 +27,9 @@ uint8_t AM_Init(void)
 	HAL_DACEx_DualStart(&AM_DAC_HANDLE);
 	AM_Instance_Init(&AM1,&hAD9959,0,1,&hdac,DAC_CHANNEL_1);
 	AM_Instance_Init(&AM2,&hAD9959,2,3,&hdac,DAC_CHANNEL_2);
+	
+	
+	
 	
 	return HAL_OK;
 
@@ -52,13 +56,22 @@ uint8_t AM_ApplyChanges(AM_Instance* hamx[], uint16_t cnt)
 		datafloat=((double)(hamx[i]->had9959->freq[hamx[i]->CH_CW])*360*(hamx[i]->TDelay)/1000000000);
 		AD9959_Set_Phase(hamx[i]->had9959,hamx[i]->CH_CW,&datafloat);
 		
-		data16=1023;
-		AD9959_Set_Amp(hamx[i]->had9959, hamx[i]->CH_CW, &data16);
-		data16=data16*(hamx[i]->MDepth);
-		AD9959_Set_Amp(hamx[i]->had9959, hamx[i]->CH_MW, &data16);
-		
+				
 		data32=2000000;
 		AD9959_Set_Freq(hamx[i]->had9959, hamx[i]->CH_MW, &data32);
+		
+		
+		datafloat=(hamx[i]->min_amp*1023)*AD9959_AmpComps(hamx[i]->had9959->freq[hamx[i]->CH_CW]);
+		data16=(uint16_t)datafloat;
+		
+		AD9959_Set_Amp(hamx[i]->had9959, hamx[i]->CH_CW, &data16);
+		
+		datafloat=(hamx[i]->min_amp*1023)*AD9959_AmpComps(hamx[i]->had9959->freq[hamx[i]->CH_MW])*(hamx[i]->MDepth);
+		data16=(uint16_t)datafloat;
+
+		AD9959_Set_Amp(hamx[i]->had9959, hamx[i]->CH_MW, &data16);
+		
+
 	}
 
 	for(uint16_t i=0;i<cnt;i++)
