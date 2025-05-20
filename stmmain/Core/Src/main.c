@@ -107,6 +107,7 @@ int main(void)
   MX_DAC_Init();
   /* USER CODE BEGIN 2 */
   AM_Init();
+  AM_Instance* AM_PTRS[2]={&AM1, &AM2};
   delay_init();
   
   
@@ -128,10 +129,11 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 
+	AM_SetModulationFreq(&AM1,2000000);
   while (1)
   {
 	  
-
+		
 	  
 		while (getRingBufferLength() >= FRAME_LENGTH)
 		{
@@ -147,6 +149,10 @@ int main(void)
 				{
 					freq=read1ByteFromRingBuffer(2);
 					sprintf(str,"Cfreq changed to %d MHz",freq);syslog(str);
+					
+					uint32_t cfreq=freq*1000000;
+					AM_SetCarrierFreq(&AM1, cfreq);
+					AM_SetCarrierFreq(&AM2, cfreq);
 				} 
 				else if (operation_flag == 0x01)
 				{
@@ -157,11 +163,18 @@ int main(void)
 				{
 					md=read1ByteFromRingBuffer(2);
 					sprintf(str,"ModuDepth changed to %d %%",md);syslog(str);
+					
+					float MD=((float)md)/100;
+					AM_SetMDepth(&AM1,MD);
+					AM_SetMDepth(&AM2,MD);
 				} 
 				else if (operation_flag == 0x03)
 				{
 					tdelay=read1ByteFromRingBuffer(2);
 					sprintf(str,"Bsig delay changed to %d0ns",tdelay);syslog(str);
+					
+					uint16_t TD=tdelay;
+					AM_SetTDelay(&AM1,&AM2,TD);
 				} 
 				else if (operation_flag == 0x04)
 				{
@@ -181,6 +194,7 @@ int main(void)
 			}
 		}
 	LED;
+	AM_ApplyChanges(AM_PTRS,2);
 	HAL_Delay(1);
 	}
     /* USER CODE END WHILE */

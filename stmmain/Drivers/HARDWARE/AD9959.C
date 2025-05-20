@@ -338,12 +338,17 @@ uint8_t AD9959_Set_Amp(AD9959_HandleTypeDef* had9959, uint16_t channel, uint16_t
 
 uint8_t AD9959_Apply_Change(AD9959_HandleTypeDef* had9959)
 {
-	for(uint16_t i=0;i<4;i++)
+	if(had9959->changeFlag==1)
 	{
-		Write_frequence(i,had9959->freq[i]);
-		Write_Phase(i,had9959->phase[i]);
-		Write_Amplitude(i,had9959->amp[i]);
+		syslog("Change Applied");
+		for(uint16_t i=0;i<4;i++)
+		{
+			Write_frequence(i,had9959->freq[i]);
+			Write_Phase(i,had9959->phase[i]);
+			Write_Amplitude(i,had9959->amp[i]);
+		}
 	}
+
 	had9959->changeFlag=0;
 	return HAL_OK;
 }
