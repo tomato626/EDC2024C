@@ -12,6 +12,8 @@
 
 #define AM_DAC_HANDLE  hdac
 
+#define DAC_Trigger(hdac) (SET_BIT((hdac)->Instance->SWTRIGR, DAC_SWTRIGR_SWTRIG1))
+
 typedef struct{
 	AD9959_HandleTypeDef* had9959;
 	uint8_t CH_LW;//载波（信号）
@@ -32,5 +34,10 @@ typedef struct{
 extern AM_Instance AM1,AM2;
 
 
+
+
+void AM_Instance_Init(AM_Instance* ham, AD9959_HandleTypeDef* had9959, uint16_t chcw, uint16_t chlw, DAC_HandleTypeDef* hdacx, uint32_t dac_channel);
+uint8_t AM_Init(void);
+uint8_t SetDAC(AM_Instance* hamx, uint16_t val);
 
 #endif

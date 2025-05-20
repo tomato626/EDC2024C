@@ -28,6 +28,10 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
+#include "AD9959.H"
+#include "AM_9959.h"
+#include "delay.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -102,6 +106,25 @@ int main(void)
   MX_TIM6_Init();
   MX_DAC_Init();
   /* USER CODE BEGIN 2 */
+  AM_Init();
+  delay_init();
+  HAL_DAC_Start(&hdac,DAC_CHANNEL_1);
+  while(1)
+  {
+	  
+	  static uint16_t tmpval=0;
+	  tmpval=tmpval>4096?0:tmpval+1;
+	  HAL_DAC_SetValue(&hdac,DAC_CHANNEL_1,DAC_ALIGN_12B_R,tmpval);
+	  
+	  DAC_Trigger(&hdac);
+	  
+	  //HAL_Delay(41);
+	  delay_ms(0.4096);
+  }
+  
+  
+  
+  
 	SPI_LCD_Init();
 	syslog("LCD Init Success");
 	initRingBuffer();		
@@ -118,8 +141,12 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+
   while (1)
   {
+	  
+
+	  
 		while (getRingBufferLength() >= FRAME_LENGTH)
 		{
 			
@@ -168,7 +195,7 @@ int main(void)
 			}
 		}
 	LED;
-	HAL_Delay(200);
+	HAL_Delay(1);
 	}
     /* USER CODE END WHILE */
 
