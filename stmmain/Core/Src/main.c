@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "dac.h"
 #include "rtc.h"
 #include "spi.h"
 #include "tim.h"
@@ -99,6 +100,7 @@ int main(void)
   MX_SPI3_Init();
   MX_USART1_UART_Init();
   MX_TIM6_Init();
+  MX_DAC_Init();
   /* USER CODE BEGIN 2 */
 	SPI_LCD_Init();
 	syslog("LCD Init Success");

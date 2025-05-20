@@ -1,0 +1,36 @@
+#ifndef __AM_9959_H
+#define __AM_9959_H
+#include "main.h"
+#include "dac.h"
+#include "AD9959.H"
+
+#ifdef ARM_MATH_CM4
+#include "arm_math.h"
+#else
+#include "math.h"
+#endif
+
+#define AM_DAC_HANDLE  hdac
+
+typedef struct{
+	AD9959_HandleTypeDef* had9959;
+	uint8_t CH_LW;//载波（信号）
+	uint8_t CH_CW;//调制（高频）
+	
+	DAC_HandleTypeDef* hdac;
+	uint32_t CH_ADC;
+	
+	
+	
+	float MDepth;//调制度
+	float TDelay;//延时
+	float amp;//幅度
+	
+	
+}AM_Instance;
+
+extern AM_Instance AM1,AM2;
+
+
+
+#endif
