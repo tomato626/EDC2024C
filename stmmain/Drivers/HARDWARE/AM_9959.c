@@ -29,6 +29,7 @@ uint8_t AM_Init(void)
 uint8_t SetDAC(AM_Instance* hamx, uint16_t val)
 {
 	HAL_DAC_SetValue(hamx->hdac,hamx->CH_ADC,DAC_ALIGN_12B_R,val>4096?4096:val);
+	DAC_Trigger(&hdac);
 	return HAL_OK;
 }
 
