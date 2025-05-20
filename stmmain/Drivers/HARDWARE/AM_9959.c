@@ -16,6 +16,9 @@ void AM_Instance_Init(AM_Instance* ham, AD9959_HandleTypeDef* had9959, uint16_t 
 	ham->changeflag=0;
 }
 
+/*
+初始化AM实例
+*/
 uint8_t AM_Init(void)
 {
 	HAL_DAC_Init(&hdac);
@@ -28,6 +31,12 @@ uint8_t AM_Init(void)
 
 }
 
+
+/*
+同步并应用由AM_SetXXX产生的更改。
+hmax: AM_Instance指针数组
+cnt:   数组长度
+*/
 uint8_t AM_ApplyChanges(AM_Instance* hmax[], uint16_t cnt)
 {
 	uint16_t data16;
@@ -69,6 +78,10 @@ uint8_t AM_ApplyChanges(AM_Instance* hmax[], uint16_t cnt)
 }
 
 
+
+/*
+设置hmax指向的AM实例的载波频率
+*/
 uint8_t AM_SetCarrierFreq(AM_Instance* hmax, uint32_t Cfreq)
 {
 	AD9959_Set_Freq(hmax->had9959,hmax->CH_CW,&Cfreq);
@@ -76,6 +89,10 @@ uint8_t AM_SetCarrierFreq(AM_Instance* hmax, uint32_t Cfreq)
 	return HAL_OK;
 }
 
+
+/*
+设置hmax指向的AM实例的基波频率
+*/
 uint8_t AM_SetModulationFreq(AM_Instance* hmax, uint32_t Mfreq)
 {
 	AD9959_Set_Freq(hmax->had9959,hmax->CH_MW,&Mfreq);
@@ -83,6 +100,9 @@ uint8_t AM_SetModulationFreq(AM_Instance* hmax, uint32_t Mfreq)
 	return HAL_OK;
 }
 
+/*
+设置hmax指向的AM实例的调制度
+*/
 uint8_t AM_SetMDepth(AM_Instance* hmax, float MD)
 {
 	hmax->MDepth=MD;
@@ -90,6 +110,11 @@ uint8_t AM_SetMDepth(AM_Instance* hmax, float MD)
 	return HAL_OK;
 }
 
+/*
+设置hmax1, hmax2指向的AM实例的载波时间差
+hmax1的时间偏移被设置为0，hmax2的时间偏移被设置为TD
+TD:  延时，单位ns
+*/
 uint8_t AM_SetTDelay(AM_Instance* hmax1, AM_Instance* hmax2, float TD)
 {
 	hmax1->TDelay=0;
