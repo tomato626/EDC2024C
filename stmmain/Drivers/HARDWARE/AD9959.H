@@ -29,9 +29,19 @@
 #define AD9959_PWR(a)  HAL_GPIO_WritePin(GPIOE, AD9959_PDC_Pin, (a))               // Power-Down Control (HIGH = normal operation)
 #define Reset(a)       HAL_GPIO_WritePin(GPIOE, AD9959_RST_Pin, (a))               // Hardware Reset (active HIGH)
 
-extern uint32_t SinFre[4];
-extern uint16_t SinPhr[4];
-extern uint16_t SinAmp[4];
+
+typedef struct{
+	uint32_t freq[4];
+	uint16_t phase[4];
+	uint16_t amp[4];
+	
+	
+}AD9959_HandleTypeDef;
+
+//extern uint32_t SinFre[4];
+//extern uint16_t SinPhr[4];
+//extern uint16_t SinAmp[4];
+extern AD9959_HandleTypeDef hAD9959;
 
 
 void delay1 (uint32_t length);

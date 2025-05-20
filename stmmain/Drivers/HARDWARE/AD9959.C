@@ -20,13 +20,25 @@ uint8_t RDW_DATA[4] = {0x00,0x00,0x00,0x00};//default Value = 0x--------
 																	
 uint8_t FDW_DATA[4] = {0x00,0x00,0x00,0x00};//default Value = 0x--------
 
-uint32_t SinFre[4]={1000000,1000000,1000000,1000000};
-uint16_t SinPhr[4]={0,4096-1,4096*2-1,4096*3-1};
-uint16_t SinAmp[4]={1023,1023,1023,1023};
+
+
+AD9959_HandleTypeDef hAD9959;
 
 //AD9959初始化
 void Init_AD9959(void)  
 { 
+	uint32_t SinFre[4]={1000000,1000000,1000000,1000000};
+	uint16_t SinPhr[4]={0,4096-1,4096*2-1,4096*3-1};
+	uint16_t SinAmp[4]={1023,1023,1023,1023};
+	for(uint16_t i=0;i<4;i++)
+	{
+		hAD9959.amp[i]=SinAmp[i];
+		hAD9959.freq[i]=SinFre[i];
+		hAD9959.phase[i]=SinPhr[i];
+	}
+	
+	
+	
 	uint8_t FR1_DATA[3] = {0xD0,0x00,0x00};//20倍频 Charge pump control = 75uA FR1<23> -- VCO gain control =0时 system clock below 160 MHz;
   IntReset();  //AD9959复位  
 	
@@ -241,3 +253,70 @@ void Write_Phase(uint8_t Channel, uint16_t Phase)
     WriteData_AD9959(CPOW0_ADD, 2, CPOW0_DATA, 1);
   }
 }
+
+uint8_t Set_Phase(AD9959_HandleTypeDef* had9959, uint16_t channel, uint16_t* data)
+{
+	if(channel<4)
+	{
+		had9959->phase[channel]=*data;
+	}
+	else
+	{
+		had9959->phase[0]=data[0];
+		had9959->phase[1]=data[1];
+		had9959->phase[2]=data[2];
+		had9959->phase[3]=data[3];
+	}
+	return HAL_OK;
+}
+
+uint8_t Set_Freq(AD9959_HandleTypeDef* had9959, uint16_t channel, uint16_t* data)
+{
+	if(channel<4)
+	{
+		had9959->freq[channel]=*data;
+	}
+	else
+	{
+		had9959->freq[0]=data[0];
+		had9959->freq[1]=data[1];
+		had9959->freq[2]=data[2];
+		had9959->freq[3]=data[3];
+	}
+	return HAL_OK;
+}
+
+uint8_t Set_Amp(AD9959_HandleTypeDef* had9959, uint16_t channel, uint16_t* data)
+{
+	uint16_t maxAmp=1024;
+	if(channel<4)
+	{
+		had9959->amp[channel]=data[0]<=maxAmp? data[0]: maxAmp;
+	}
+	else
+	{
+		had9959->amp[0]=data[0]<=maxAmp? data[0]: maxAmp;
+		had9959->amp[1]=data[1]<=maxAmp? data[1]: maxAmp;
+		had9959->amp[2]=data[2]<=maxAmp? data[2]: maxAmp;
+		had9959->amp[3]=data[3]<=maxAmp? data[3]: maxAmp;
+	}
+	return HAL_OK;
+}
+
+
+uint8_t Apply_Change(AD9959_HandleTypeDef* had9959)
+{
+	for(uint16_t i=0;i<4;i++)
+	{
+		Write_frequence(i,had9959->freq[i]);
+		Write_Phase(i,had9959->phase[i]);
+		Write_Amplitude(i,had9959->amp[i]);
+	}
+	return HAL_OK;
+}
+
+
+
+
+
+

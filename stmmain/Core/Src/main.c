@@ -116,46 +116,50 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-		while (usize >= FRAME_LENGTH)
+		while (getRingBufferLength() >= FRAME_LENGTH)
 		{
 			
-			if (usize >= FRAME_LENGTH && u(0) == 0x55 && u(4) == 0xff && u(5) == 0xff && u(6) == 0xff)
+			if (getRingBufferLength() >= FRAME_LENGTH && 
+				read1ByteFromRingBuffer(0) == 0x55 && 
+			read1ByteFromRingBuffer(4) == 0xFF && 
+			read1ByteFromRingBuffer(5) == 0xFF &&
+			read1ByteFromRingBuffer(6) == 0xFF)//检查帧头及帧尾
 			{
-				
-				if (u(1) == 0x00)
+				uint8_t operation_flag=read1ByteFromRingBuffer(1);
+				if (operation_flag == 0x00)
 				{
-					freq=u(2);
+					freq=read1ByteFromRingBuffer(2);
 					sprintf(str,"Cfreq changed to %d MHz",freq);syslog(str);
 				} 
-				else if (u(1) == 0x01)
+				else if (operation_flag == 0x01)
 				{
-					amp=u(2);
+					amp=read1ByteFromRingBuffer(2);
 					sprintf(str,"EffValue changed to %d00mV",amp);syslog(str);
 				} 
-				else if (u(1) == 0x02)
+				else if (operation_flag == 0x02)
 				{
-					md=u(2);
+					md=read1ByteFromRingBuffer(2);
 					sprintf(str,"ModuDepth changed to %d %%",md);syslog(str);
 				} 
-				else if (u(1) == 0x03)
+				else if (operation_flag == 0x03)
 				{
-					tdelay=u(2);
+					tdelay=read1ByteFromRingBuffer(2);
 					sprintf(str,"Bsig delay changed to %d0ns",tdelay);syslog(str);
 				} 
-				else if (u(1) == 0x04)
+				else if (operation_flag == 0x04)
 				{
-					atten=u(2);
+					atten=read1ByteFromRingBuffer(2);
 					sprintf(str,"Bsig atten changed to %ddb",atten);syslog(str);
 				} 
-				else if (u(1) == 0x05)
+				else if (operation_flag == 0x05)
 				{
-					sphase=u(2);
+					sphase=read1ByteFromRingBuffer(2);
 					sprintf(str,"Bsig delay changed to %d0°",sphase);syslog(str);
 				} 
-				udelete(7); 
+				deleteRingBuffer(7); 
 			} else
 			{
-				udelete(1);
+				deleteRingBuffer(1);
 				break;
 			}
 		}
