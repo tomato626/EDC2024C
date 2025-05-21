@@ -21,7 +21,7 @@ typedef struct{
 	uint8_t CH_CW;//调制（高频）
 	
 	DAC_HandleTypeDef* hdac;
-	uint32_t CH_ADC;
+	uint32_t CH_DAC;
 	
 	
 	

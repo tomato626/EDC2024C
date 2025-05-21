@@ -3,7 +3,9 @@
 
 
 AM_Instance AM1,AM2;
-
+/*
+初始化AM实例
+*/
 void AM_Instance_Init(AM_Instance* ham, AD9959_HandleTypeDef* had9959, uint16_t chcw, uint16_t chmw, DAC_HandleTypeDef* hdacx, uint32_t dac_channel)
 {
 	ham->CH_CW=chcw;
@@ -12,13 +14,13 @@ void AM_Instance_Init(AM_Instance* ham, AD9959_HandleTypeDef* had9959, uint16_t 
 	ham->TDelay=0;
 	ham->had9959=had9959;
 	ham->hdac=hdacx;
-	ham->CH_ADC=dac_channel;
+	ham->CH_DAC=dac_channel;
 	ham->changeflag=0;
 	ham->min_amp=AD9959_GetMinAmp(0,40);
 }
 
 /*
-初始化AM实例
+初始化本题中用到的AM
 */
 uint8_t AM_Init(void)
 {
@@ -139,7 +141,7 @@ uint8_t AM_SetTDelay(AM_Instance* hamx1, AM_Instance* hamx2, uint16_t TD)
 
 uint8_t SetDAC(AM_Instance* hamx, uint16_t val)
 {
-	HAL_DAC_SetValue(hamx->hdac,hamx->CH_ADC,DAC_ALIGN_12B_R,val>4096?4096:val);
+	HAL_DAC_SetValue(hamx->hdac,hamx->CH_DAC,DAC_ALIGN_12B_R,val>4096?4096:val);
 	DAC_Trigger(&hdac);
 	return HAL_OK;
 }
